@@ -1,0 +1,228 @@
+$(document).ready(function() {
+  // global selector variables
+  var seq = [];
+  var userSeq = [];
+  var green = $("#green");
+  var red = $("#red");
+  var yellow = $("#yellow");
+  var blue = $("#blue");
+  var color = [green, red, yellow, blue];
+  var level = 0;
+  var speed = 1000;
+  var lightSpeed = 800;
+  var clickCount = 0;
+  var gameRunning=false;
+  var strictMode = false;
+  var greenAud = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound1.mp3");
+  var redAud = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound2.mp3");
+  var yellowAud = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound3.mp3");
+  var blueAud = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound4.mp3");
+
+  start();
+  restart();
+  strict();
+
+  // start btn
+  function start() {
+    $("#start-btn").on("click", function() {
+      userClick();
+      newRound();
+    });
+  }
+  // restart btn 
+  function restart() {
+    $("#restart-btn").on("click", function() {
+      seq = [];
+      level = 0;
+      newRound();
+    });
+  }
+
+  //strict btn
+  function strict() {
+    $("#strict-btn").on("click", function() {
+      toggleStrict();
+      $("#strict").toggle();
+    });
+
+  }
+
+  // toggle strictmode true or false
+  function toggleStrict() {
+    strictMode = !strictMode;
+  }
+
+  function newRound() {
+    var randomNum = Math.floor(Math.random() * 4);
+    seq.push(color[randomNum]);
+    gamePattern(seq);
+    clickCount = 0;
+    countScreen();
+    speedGame();
+  }
+
+  function gamePattern(sequence) {
+    var i = 0;
+    var int = setInterval(function() {
+      disable();
+      lightColor(sequence[i]);
+      playSound(sequence[i]);
+      i++;
+      if (i == sequence.length) {
+        clearInterval(int);
+        userClick();
+      }
+      $("#restart-btn").on("click", function() {
+        clearInterval(int);
+      });
+
+    }, speed);
+
+  }
+
+  function lightColor(color) {
+    color.animate({
+
+      opacity: 1.5
+    }, 5, function() {
+      window.setTimeout(function() {
+        color.css("opacity", "0.6");
+      }, lightSpeed);
+    });
+
+  }
+
+  function clickLight(color) {
+    color.animate({
+      opacity: 1.5
+    }, 5, function() {
+      window.setTimeout(function() {
+        color.css("opacity", "0.6");
+      }, 100);
+    });
+
+  }
+
+  function speedGame() {
+    if (level > 5) {
+      speed = 800;
+      lightSpeed = 600;
+    }
+   else if (level > 15) {
+      speed = 600;
+      lightSpeed = 400;
+    }
+  }
+  // countScreen method
+  function countScreen() {
+    level++;
+    $("#screen").text(function() {
+      if (level < 10) {
+        level = "0" + level;
+      }
+      $("#screen").text(level);
+    });
+  }
+
+  // disable buttons
+  function disable() {
+    green.off("click");
+    red.off("click");
+    blue.off("click");
+    yellow.off("click");
+  }
+
+  // userInteraction
+  function userClick() {
+    green.on("click", function() {
+      clickCount++;
+      clickLight(green);
+      playSound(green);
+      checkPattern(green);
+
+    });
+    red.on("click", function() {
+      clickCount++;
+      clickLight(red);
+      playSound(red);
+      checkPattern(red);
+    });
+    yellow.on("click", function() {
+      clickCount++;
+      clickLight(yellow);
+      playSound(yellow);
+      checkPattern(yellow);
+    });
+    blue.on("click", function() {
+      clickCount++;
+      clickLight(blue);
+      playSound(blue);
+      checkPattern(blue);
+    });
+
+  }
+
+  // function playSound
+
+  function playSound(pad) {
+    switch (pad) {
+      case green:
+        greenAud.play();
+        break;
+      case red:
+        redAud.play();
+        break;
+      case yellow:
+        yellowAud.play();
+        break;
+      case blue:
+        blueAud.play();
+        break;
+
+    }
+
+  }
+
+  // check if user is wrong 
+  function checkPattern(move) {
+    if (move !== seq[clickCount - 1]) { // if move does not match element in array
+      clickCount = 0;
+      if (strictMode === true) {
+        level = 0;
+        seq = [];
+        newRound();
+      } else {
+        userWrong();
+        window.setTimeout(function() {
+          gamePattern(seq);
+        }, 800);
+      }
+
+    } else if (clickCount === seq.length) { // is this move the last move
+      victory(); // is this round a victory round
+      newRound();
+    }
+
+  }
+
+  function userWrong() {
+    disable();
+    $("#screen").text("!!");
+    level = level
+    window.setTimeout(function() {
+      $("#screen").text(level);
+    }, 500);
+  }
+
+  function victory() {
+    if (level == 20) {
+      alert("You Won!!")
+      seq = [];
+      level = 0;
+      window.setTimeout(function() {
+        $("#screen").text(level);
+      }, 1000);
+
+    }
+  }
+});
