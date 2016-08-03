@@ -1,0 +1,141 @@
+body {
+  color: white;
+}
+
+footer {
+  color: black;
+  margin-bottom: 2px;
+}
+
+#outerContainer {
+  border: 10px solid black;
+  background: black;
+  width: 500px;
+  height: 500px;
+  border-radius: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  padding: 0;
+  overflow: hidden;
+}
+
+.squares {
+  width: 200px;
+  height: 260px;
+  border: 1px solid black;
+  display: inline-block;
+}
+
+#green {
+  margin: 0 0 0 0;
+  padding: 200px 240px 0 0;
+  background: green;
+  opacity: 0.6;
+}
+
+#red {
+  position: absolute;
+  left: 240px;
+  padding: 0 240px 0 0;
+  background: red;
+  opacity: 0.6;
+}
+
+#yellow {
+  margin: 0 0 0 0;
+  padding: 0 240px 0 0px;
+  background: yellow;
+  opacity: 0.6;
+}
+
+#blue {
+  position: absolute;
+  left: 240px;
+  padding: 0 240px 0 0;
+  background: blue;
+  opacity: 0.6;
+}
+
+#circle {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: white;
+  border: 5px solid black;
+  z-index: 10;
+  border-radius: 100%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+#screen {
+  position: absolute;
+  width: 100px;
+  height: 50px;
+  background: black;
+  border-radius: 5px;
+  top: 0;
+  bottom: 60px;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.btn {
+  width: 30px;
+  height: 30px;
+  margin: 120px 0 0 0px;
+  border-radius: 100%;
+}
+
+#restart-btn {
+  margin-left: 47px;
+  background: blue;
+  border: 1px solid black;
+}
+
+#start-btn {
+  background: green;
+  border: 1px solid black;
+}
+
+#strict-btn {
+  background: red;
+  border: 1px solid black;
+}
+
+#strict {
+  display: none;
+  position: absolute;
+  top: 100px;
+  bottom: 60px;
+  left: 68px;
+  right: 0;
+  margin: auto;
+  width: 6px;
+  height: 6px;
+  background: red;
+  border-radius: 100%;
+  border: 1px solid black;
+}
+
+.label {
+  color: black;
+  margin: 20px -9px 0 0px
+}
+
+#restart {
+  margin: 20px -9px 0 40px;
+}
+
+#screen {
+  font-size: 2em;
+  padding-top: 5px;
+}
